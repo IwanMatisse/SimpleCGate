@@ -48,7 +48,7 @@ Functions:
 * `virtual void AddNewConsumer(IEventConsumer* const)` : enrolls the object as a messages receiver (usually called in a constructor of an object-consumer);
 * `virtual void RemoveConsumer(const IEventConsumer*)` : dismisses the object from the pool of receivers;
 * `virtual void AddEvent(Event::Types type, int global_id)` ;
-* `virtual void AddEvent(Event::Types type)` : creates an "event message" and notifies all the registered consumers/receivers. The type of event describes what has happened. For example, some changes have happened in quotes, in a position or in an order, or a new trade have come.  global_id – is an identifier of an entity from the **GateDatabase** which the event is associated with. Each consumer processes its messages in a separated thread;
+* `virtual void AddEvent(Event::Types type)` : creates an "event message" and notifies all the registered consumers/receivers. The type of event describes what has happened. For example, some changes have happened in quotes, in a position or in an order, or a new trade have come.  *global_id* – is an identifier of an entity from the **GateDatabase** which the event is associated with. Each consumer processes its messages in a separated thread;
 * `virtual void AddCommandEvent(const Command& com)` : creates a "command message" and notifies all the registered consumers/receivers. 
 
 
@@ -67,14 +67,14 @@ The **GateDatabase** contains dictionaries of instruments, positions, orders and
 The entities are created and modified only from the **PlazaConnector**. The **StrategyManager** and the **DataServer** are in the read-only mode.
 
 Data:
-1. Securities. Additional 'std::map' is for fast access by *ISIN*: ```std::map<std::string, std::shared_ptr<Security>> securities_;``` There are routines to get a contract (by *global_id* and *ISIN*), to create and to check the existence of a contract.    
-2. Orders. Additional 'std::map' is for fast access by *user id*: ```std::map<unsigned int, std::shared_ptr<Order>> orders_;``` There are routines to get an order (by *global_id* and *user id*), to create and to check the existence of an order. To create an order, use these functions:
-* `CreateOrder` – to make an order that was received from the MOEX (not created by the algorithm). 
-* `CreateNewOrder` – to make a new order which will be sent to the MOEX.
-3. Trades. Additional `std::map` is for fast access by *trade_id*: ```std::map<unsigned long long, std::shared_ptr<Trade>> my_trades_;``` There are routines to get a trade (by *global_id* and *trade_id*), to create and to check the existence of a trade. 
-4. Positions. Additional std::map is for fast access by *ISIN*: ```std::map<std::string, std::shared_ptr<Position>> positions_;``` There are routines to get a position (by *global_id* and *ISIN*), to create and to check the existence of a position.
-5. Strategies. A strategy does not have any additional identifier. There are routines to add a new strategy to the database and to get a strategy by *global_id*.
-6. MoneyInfo. It is a simple data structure that contains the information on funds, limits.
+1. **Securities**. Additional 'std::map' is for fast access by *ISIN*: ```std::map<std::string, std::shared_ptr<Security>> securities_;```. There are routines to get a contract (by *global_id* and *ISIN*), to create and to check the existence of a contract.    
+2. **Orders**. Additional 'std::map' is for fast access by *user id*: ```std::map<unsigned int, std::shared_ptr<Order>> orders_;```. There are routines to get an order (by *global_id* and *user id*), to create and to check the existence of an order. To create an order, use these functions:
+  * `CreateOrder` – to make an order that was received from the MOEX (not created by the algorithm). 
+  * `CreateNewOrder` – to make a new order which will be sent to the MOEX.
+3. **Trades**. Additional `std::map` is for fast access by *trade_id*: ```std::map<unsigned long long, std::shared_ptr<Trade>> my_trades_;```. There are routines to get a trade (by *global_id* and *trade_id*), to create and to check the existence of a trade. 
+4. **Positions**. Additional std::map is for fast access by *ISIN*: ```std::map<std::string, std::shared_ptr<Position>> positions_;```. There are routines to get a position (by *global_id* and *ISIN*), to create and to check the existence of a position.
+5. **Strategies**. A strategy does not have any additional identifier. There are routines to add a new strategy to the database and to get a strategy by *global_id*.
+6. **MoneyInfo**. It is a simple data structure that contains the information on funds, limits.
 
 ---
 
@@ -132,7 +132,7 @@ Receiving and processing data from the **DataStream** occur in the corresponding
 See more about the replication scheme in the documentation: p2gate_en.pdf
 
 The **PlazaConnector** reads settings from the file PlazaConfig.ini that contains:
-
+```
 [Main]
 BrokerCode = ABCD
 ClientCode = 999
@@ -140,7 +140,7 @@ Address = 127.0.0.1
 Port = 4001
 Fast = 0
 TCP = 1
-
+```
 **BrokerCode** and **ClientCode** are identifiers for the plaza's login.
 **Address** and **Port** are the P2MQRouter's address and port.
 **Fast** - 1 to use fast data streams, 0 to use usual data streams.
