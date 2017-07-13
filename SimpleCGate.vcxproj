@@ -101,12 +101,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\SpectraCGate\SDK\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(CGATE_HOME)\SDK\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\SpectraCGate\SDK\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(CGATE_HOME)\SDK\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cgate64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -135,24 +136,63 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\SpectraCGate\SDK\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(CGATE_HOME)\SDK\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\SpectraCGate\SDK\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(CGATE_HOME)\SDK\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cgate64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CommonStream.h" />
+    <ClInclude Include="Connector.h" />
+    <ClInclude Include="Database.h" />
+    <ClInclude Include="DataServer.h" />
+    <ClInclude Include="DataStream.h" />
+    <ClInclude Include="DateTime.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="EventConsumer.h" />
+    <ClInclude Include="EventManager.h" />
+    <ClInclude Include="Money.h" />
+    <ClInclude Include="Order.h" />
+    <ClInclude Include="OrderStream.h" />
+    <ClInclude Include="PlazaConnector.h" />
+    <ClInclude Include="PlazaMessages.h" />
+    <ClInclude Include="PlazaStructures.h" />
+    <ClInclude Include="Position.h" />
+    <ClInclude Include="SampleBidAskStrategy.h" />
+    <ClInclude Include="Security.h" />
+    <ClInclude Include="ServiceStream.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Strategy.h" />
+    <ClInclude Include="StrategyManager.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Trade.h" />
+    <ClInclude Include="TransactionManager.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CommonStream.cpp" />
+    <ClCompile Include="Database.cpp" />
+    <ClCompile Include="DataServer.cpp" />
+    <ClCompile Include="DataStream.cpp" />
+    <ClCompile Include="EventConsumer.cpp" />
+    <ClCompile Include="EventManager.cpp" />
+    <ClCompile Include="Money.cpp" />
+    <ClCompile Include="Order.cpp" />
+    <ClCompile Include="OrdersStream.cpp" />
+    <ClCompile Include="PlazaCallbacks.cpp" />
+    <ClCompile Include="PlazaConnector.cpp" />
+    <ClCompile Include="Position.cpp" />
+    <ClCompile Include="Security.cpp" />
+    <ClCompile Include="ServiceStream.cpp" />
     <ClCompile Include="SimpleCGate.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -160,6 +200,19 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="StrategyManager.cpp" />
+    <ClCompile Include="Trade.cpp" />
+    <ClCompile Include="TransactionManager.cpp" />
+    <ClCompile Include="Utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="INI\forts_messages.ini" />
+    <None Include="INI\fut_common.ini" />
+    <None Include="INI\fut_info.ini" />
+    <None Include="INI\fut_user_deal.ini" />
+    <None Include="INI\part.ini" />
+    <None Include="INI\pos.ini" />
+    <None Include="INI\vm.ini" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

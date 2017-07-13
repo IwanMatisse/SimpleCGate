@@ -13,6 +13,33 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Entities">
+      <UniqueIdentifier>{b3cf4c48-ff7c-48f2-be9f-354a2e6b8973}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entities">
+      <UniqueIdentifier>{7f38d3fd-4ff9-4fab-a95f-58ee74d9ace0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Events">
+      <UniqueIdentifier>{4ff21242-6546-4b95-a400-105939dc375b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Events">
+      <UniqueIdentifier>{6f4abb24-ec58-42af-a606-5c88efeb9a8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Connector">
+      <UniqueIdentifier>{7e5671a7-6baa-4a1f-b0c8-c6eed77eb450}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Connector">
+      <UniqueIdentifier>{231fe251-6d0e-4be4-859f-c90f86bbee2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Connector\structs">
+      <UniqueIdentifier>{c76c65dd-2c25-498c-ad0a-e84b253ae085}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Strategy">
+      <UniqueIdentifier>{6ae79c05-ca76-4ef6-ab5f-99876f315978}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="INI">
+      <UniqueIdentifier>{8f3905cd-7cb5-4c1c-ab2f-e8dff4742ce9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -24,6 +51,78 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DataServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Security.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Position.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Money.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Order.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="DateTime.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Trade.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="EventConsumer.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="EventManager.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStream.h">
+      <Filter>Header Files\Connector</Filter>
+    </ClInclude>
+    <ClInclude Include="ServiceStream.h">
+      <Filter>Header Files\Connector</Filter>
+    </ClInclude>
+    <ClInclude Include="OrderStream.h">
+      <Filter>Header Files\Connector</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonStream.h">
+      <Filter>Header Files\Connector</Filter>
+    </ClInclude>
+    <ClInclude Include="TransactionManager.h">
+      <Filter>Header Files\Connector</Filter>
+    </ClInclude>
+    <ClInclude Include="PlazaMessages.h">
+      <Filter>Header Files\Connector\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="PlazaStructures.h">
+      <Filter>Header Files\Connector\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Strategy.h">
+      <Filter>Header Files\Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="StrategyManager.h">
+      <Filter>Header Files\Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleBidAskStrategy.h">
+      <Filter>Header Files\Strategy</Filter>
+    </ClInclude>
+    <ClInclude Include="PlazaConnector.h">
+      <Filter>Header Files\Connector</Filter>
+    </ClInclude>
+    <ClInclude Include="Connector.h">
+      <Filter>Header Files\Connector</Filter>
+    </ClInclude>
+    <ClInclude Include="Database.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -32,5 +131,82 @@
     <ClCompile Include="SimpleCGate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Security.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Position.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Money.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Order.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Trade.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="EventConsumer.cpp">
+      <Filter>Source Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="DataStream.cpp">
+      <Filter>Source Files\Connector</Filter>
+    </ClCompile>
+    <ClCompile Include="ServiceStream.cpp">
+      <Filter>Source Files\Connector</Filter>
+    </ClCompile>
+    <ClCompile Include="OrdersStream.cpp">
+      <Filter>Source Files\Connector</Filter>
+    </ClCompile>
+    <ClCompile Include="TransactionManager.cpp">
+      <Filter>Source Files\Connector</Filter>
+    </ClCompile>
+    <ClCompile Include="PlazaCallbacks.cpp">
+      <Filter>Source Files\Connector</Filter>
+    </ClCompile>
+    <ClCompile Include="DataServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StrategyManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlazaConnector.cpp">
+      <Filter>Source Files\Connector</Filter>
+    </ClCompile>
+    <ClCompile Include="EventManager.cpp">
+      <Filter>Source Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Database.cpp">
+      <Filter>Source Files\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonStream.cpp">
+      <Filter>Source Files\Connector</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="INI\forts_messages.ini">
+      <Filter>INI</Filter>
+    </None>
+    <None Include="INI\fut_common.ini">
+      <Filter>INI</Filter>
+    </None>
+    <None Include="INI\fut_info.ini">
+      <Filter>INI</Filter>
+    </None>
+    <None Include="INI\fut_user_deal.ini">
+      <Filter>INI</Filter>
+    </None>
+    <None Include="INI\part.ini">
+      <Filter>INI</Filter>
+    </None>
+    <None Include="INI\pos.ini">
+      <Filter>INI</Filter>
+    </None>
+    <None Include="INI\vm.ini">
+      <Filter>INI</Filter>
+    </None>
   </ItemGroup>
 </Project>
