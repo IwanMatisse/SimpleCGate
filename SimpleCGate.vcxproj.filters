@@ -40,6 +40,9 @@
     <Filter Include="INI">
       <UniqueIdentifier>{8f3905cd-7cb5-4c1c-ab2f-e8dff4742ce9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\DataServer">
+      <UniqueIdentifier>{a781e7b8-3df8-4e75-a283-687662574976}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -49,9 +52,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DataServer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Security.h">
@@ -122,6 +122,12 @@
     </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Header Files\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="DataServer.h">
+      <Filter>Header Files\DataServer</Filter>
+    </ClInclude>
+    <ClInclude Include="DataServer\MessageStructures.h">
+      <Filter>Header Files\DataServer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

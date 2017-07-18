@@ -11,7 +11,7 @@
 #include <functional>
 
 
-enum class AlgoState { OFF = 0, ACTIVE = 1, QUOTING = 2, COVER = 3, WAITWORKTIME = 4, FAILED = 5 };
+enum AlgoState { OFF = 0, ACTIVE = 1, QUOTING = 2, COVER = 3, WAITWORKTIME = 4, FAILED = 5 };
 
 class Strategy: public Entity
 {
@@ -53,6 +53,16 @@ public:
 	virtual void SetState(const AlgoState s)
 	{
 		state_ = s;
+	}
+
+	virtual double current_price()
+	{
+		return 0;
+	}
+
+	virtual int current_volume()
+	{
+		return 0;
 	}
 
 	std::function<void(const std::shared_ptr<Order>&)> PostOrder;

@@ -43,7 +43,7 @@ struct Event
 
 	enum class Types {
 		kNone, kSecurityAdd, kQuoteChange, kMyTradeAdd, kOrderChange, kMoneyChange, kPositionChange, kPositionClear,
-		kCommand, kNewSession, kNewStrategy,  kDisconnect, kConnect
+		kCommand, kNewSession, kNewStrategy, kStrategyChange,  kDisconnect, kConnect
 	};
 	Types type;
 	Command command; //empty for events

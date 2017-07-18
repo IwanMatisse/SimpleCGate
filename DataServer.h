@@ -13,6 +13,9 @@
 #include "EventManager.h"
 #include "Strategy.h"
 #include "Database.h"
+#include "DataServer\MessageStructures.h"
+
+#include <zmq.h>
 
 /*
 It is a base for communication with the extern GUI. 
@@ -27,7 +30,18 @@ public:
 	DataServer(EventManager& manager, GateDatabase& db);
 	virtual ~DataServer()
 	{
+		bExit_ = true;
+		for (int i = 0; i < incremental_messages_.size(); i++)
+		{
+			zmq_msg_close(&incremental_messages_[i]);
+		}
+		zmq_ctx_destroy(context);
+		
+		std::this_thread::sleep_for(std::chrono::milliseconds(200));
 		event_manager_.RemoveConsumer(this);
+		
+		incremental_.join();
+		stream_.join();
 	}
 
 	DataServer(const DataServer&) = delete;
@@ -36,8 +50,22 @@ private:
 
 	virtual void EventProcess(const Event& _event) override;
 	EventManager& event_manager_;
+	
+	void *context;
+	std::vector<zmq_msg_t> incremental_messages_;
+	std::queue<zmq_msg_t> stream_messages_;
 
-	std::vector<std::shared_ptr<Trade>> my_trades_;
+	void StoreMessage(void *data, int data_size);
+	void PublishMessage(void *data, int data_size);
+	void StreamProcess();
+	void RequestProcess();
+
+	server_data srv_data_;
+
+	std::thread incremental_;
+	std::thread stream_;
+
+	/*std::vector<std::shared_ptr<Trade>> my_trades_;
 	std::mutex my_trades_lock_;
 	std::vector<std::shared_ptr<Order >> orders_;
 	std::mutex orders_lock_;
@@ -48,8 +76,8 @@ private:
 	std::vector<std::shared_ptr<Strategy>> Strategies_;
 	std::mutex strategies_lock_;
 
-	std::shared_ptr<Money> money_info_;
+	std::shared_ptr<Money> money_info_;*/
 	GateDatabase& database_;
 
-
+	bool bExit_ =false;
 };
