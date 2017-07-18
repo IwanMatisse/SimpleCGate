@@ -20,22 +20,23 @@ SimpleCGate is a sample of implementation of a software application for access t
 
 int main()
 {
+	
 	std::string c;
-	GateDatabase database; //contains all data from CGate
+	simple_cgate::GateDatabase database; //contains all data from CGate
 	{
-		EventManager eventsManager; //dispatcher for event messages (pattern "Mediator")
+		simple_cgate::EventManager eventsManager; //dispatcher for event messages (pattern "Mediator")
 		{
-			StrategyManager algoManager(eventsManager, database); 
+			simple_cgate::StrategyManager algoManager(eventsManager, database);
 			{
-				PlazaConnector plaza("./PlazaConfig.ini", eventsManager, database); //recieving and sending data from/to CGate, and connection control
+				simple_cgate::PlazaConnector plaza("./PlazaConfig.ini", eventsManager, database); //recieving and sending data from/to CGate, and connection control
 
-				DataServer dataServer(eventsManager, database); //transmit data to extern GUI, reciving control commands from GUI
+				simple_cgate::DataServer dataServer(eventsManager, database); //transmit data to extern GUI, reciving control commands from GUI
 
 				//Example of strategy's definition 
-				auto sample_strategy = std::make_shared<SampleBidAskStrategy>(database);
-				sample_strategy->PostOrder = std::bind(&PlazaConnector::AddOrder, &plaza, std::placeholders::_1); //link order's operations
-				sample_strategy->MoveOrder = std::bind(&PlazaConnector::MoveOrder, &plaza, std::placeholders::_1, std::placeholders::_2);
-				sample_strategy->CancelOrder = std::bind(&PlazaConnector::DeleteOrder, &plaza, std::placeholders::_1);
+				auto sample_strategy = std::make_shared<simple_cgate::SampleBidAskStrategy>(database);
+				sample_strategy->PostOrder = std::bind(&simple_cgate::PlazaConnector::AddOrder, &plaza, std::placeholders::_1); //link order's operations
+				sample_strategy->MoveOrder = std::bind(&simple_cgate::PlazaConnector::MoveOrder, &plaza, std::placeholders::_1, std::placeholders::_2);
+				sample_strategy->CancelOrder = std::bind(&simple_cgate::PlazaConnector::DeleteOrder, &plaza, std::placeholders::_1);
 				sample_strategy->LoadConfig();
 				algoManager.AddStrategy(sample_strategy, sample_strategy->GetUsedSecurity()); // registration in StrategyManager
 
@@ -48,6 +49,7 @@ int main()
 		}
 	}
 	std::cin >> c;
-    return 0;
-}
+	return 0;
+	
 
+}
