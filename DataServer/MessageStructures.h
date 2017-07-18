@@ -1,18 +1,18 @@
 #pragma once
 #include "../stdafx.h"
 
-enum data_type {Security=1, Position=2, Trade=3, Order=4, Money=5, Strategy=6, Server=7, PositionClear=8, Request=9};
-enum request_type {Message=1, Connect=2, Disconnect=3, RunStrategy=4, StopStrategy=5};
+enum data_type {kSecurity=1, kPosition=2, kTrade=3, kOrder=4, kMoney=5, kStrategy=6, kServer=7, kPositionClear=8, kRequest=9};
+enum request_type {kMessage=1, kConnect=2, kDisconnect=3, kRunStrategy=4, kStopStrategy=5};
 
 struct server_data
 {
-	char type = data_type::Server;
+	char type = data_type::kServer;
 	int all_messages=0;
 };
 
 struct security_data
 {
-	char type = data_type::Security;
+	char type = data_type::kSecurity;
 	char symbol[26];
 	int id = 0;
 	double bid = 0.0;
@@ -24,19 +24,19 @@ struct security_data
 
 struct client_request
 {
-	char type = data_type::Request;
-	char req_type = request_type::Message;
+	char type = data_type::kRequest;
+	char req_type = request_type::kMessage;
 	int value = 0;
 	int id = 0;
 };
 struct position_clear
 {
-	char type = data_type::PositionClear;
+	char type = data_type::kPositionClear;
 };
 
 struct position_data
 {
-	char type = data_type::Position;
+	char type = data_type::kPosition;
 	int symbol_id = 0;	
 	int open = 0;	
 	int buy = 0;
@@ -48,19 +48,19 @@ struct position_data
 
 struct trade_data
 {
-	char type = data_type::Trade;
+	char type = data_type::kTrade;
 	int symbol_id = 0;
 	int volume = 0;
 	double price = 0.0;
 	char direction = 0;
 	int id = 0;
-	
-	//time
+	date_struct date;
+	time_struct time;
 };
 
 struct order_data
 {
-	char type = data_type::Order;
+	char type = data_type::kOrder;
 	int symbol_id = 0;
 	int volume = 0;
 	double price = 0.0;
@@ -68,12 +68,13 @@ struct order_data
 	int id = 0;
 	int state = 0;
 	int balance = 0;
-	//time
+	date_struct date;
+	time_struct time;
 };
 
 struct money_data
 {
-	char type = data_type::Money;
+	char type = data_type::kMoney;
 	double coeffGo = 0.0;
 	double all = 0.0;
 	double free = 0.0;
@@ -83,36 +84,9 @@ struct money_data
 
 struct strategy_data
 {
-	char type = data_type::Strategy;
+	char type = data_type::kStrategy;
 	double price = 0.0;
 	int volume = 0;
 	char state = 0;
 	bool enabled = false;
 };
-
-/*
-
-template<typename T> class DataWrapper
-{
-public:
-	T* GetDataPointer() { return &T; }
-	int GetSize() { return sizeof(T); }
-private:
-	T data;
-};
-
-class Factory
-{
-public:
-	DataWrapper<security_data> CreateSecurityData(const int global_id);
-	DataWrapper<position_data> CreatePositionData(const int global_id);
-	DataWrapper<trade_data> CreateTradeData(const int global_id)
-	{
-		DataWrapper<trade_data> res;
-		res
-	}
-private:
-	friend class DataWrapper<security_data>;
-	friend class DataWrapper<position_data>;
-	friend class DataWrapper<trade_data>;
-};*/

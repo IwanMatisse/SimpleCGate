@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "PlazaConnector.h"
 #include "Utils.h"
+#include <sstream>
 
 
 void PlazaConnector::AutoConnectionProcess()

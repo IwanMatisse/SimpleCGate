@@ -20,6 +20,7 @@ void StrategyManager::EventProcess(const Event& event_)
 		for (auto strategy : strategies_)
 		{
 			strategy->OnNewTrade(event_.global_id);
+			event_manager_.AddEvent(Event::Types::kStrategyChange, strategy->global_id());
 		}
 		break;
 	}
@@ -28,8 +29,11 @@ void StrategyManager::EventProcess(const Event& event_)
 		std::lock_guard<std::mutex> locker(algo_lock_);
 		if (strategies_map_.find(event_.global_id) != strategies_map_.end())					
 		{
-			for (auto strategy: strategies_map_[event_.global_id])
+			for (auto strategy : strategies_map_[event_.global_id])
+			{
 				strategy->OnQuotesChange();
+				event_manager_.AddEvent(Event::Types::kStrategyChange, strategy->global_id());
+			}
 		}
 		
 		break;
@@ -41,6 +45,7 @@ void StrategyManager::EventProcess(const Event& event_)
 		for (auto strategy : strategies_)
 		{
 			strategy->OnOrderChange(event_.global_id);
+			event_manager_.AddEvent(Event::Types::kStrategyChange, strategy->global_id());
 		}
 		break;
 	}

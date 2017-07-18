@@ -14,3 +14,4 @@ std::map<std::string, std::map<std::string, std::string>> ReadConfigFile(const s
 void ReadParameter(std::map<std::string, std::string> &map, const std::string& name, std::string &dest);
 
 void ReadParameter(std::map<std::string, std::string> &map, const std::string& name, bool &dest);
+

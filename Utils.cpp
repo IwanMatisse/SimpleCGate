@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Utils.h"
-
+#include <time.h>
 
 DateTime Now()
 {

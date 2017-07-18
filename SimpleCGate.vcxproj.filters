@@ -66,9 +66,6 @@
     <ClInclude Include="Order.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="DateTime.h">
-      <Filter>Header Files\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Trade.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
@@ -128,6 +125,9 @@
     </ClInclude>
     <ClInclude Include="DataServer\MessageStructures.h">
       <Filter>Header Files\DataServer</Filter>
+    </ClInclude>
+    <ClInclude Include="DateTime.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="CommonStream.cpp">
       <Filter>Source Files\Connector</Filter>
+    </ClCompile>
+    <ClCompile Include="DateTime.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

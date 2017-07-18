@@ -184,6 +184,7 @@
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="DataServer.cpp" />
     <ClCompile Include="DataStream.cpp" />
+    <ClCompile Include="DateTime.cpp" />
     <ClCompile Include="EventConsumer.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="Money.cpp" />

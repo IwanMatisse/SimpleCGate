@@ -21,10 +21,10 @@ void DataServer::StoreMessage(void *data, int data_size)
 	incremental_messages_.push_back(std::move(message));
 
 	srv_data_.all_messages++;
-	PublishMessage(&srv_data_, sizeof(srv_data_));
-	printf("message: %d \n", srv_data_.all_messages);
+	PublishMessage(&srv_data_, sizeof(srv_data_));//notify all subscribers about the new message
 }
 
+//push the message to publishing queue (the message isn't saved after publishing) 
 void DataServer::PublishMessage(void *data, int data_size)
 {	
 	zmq_msg_t message;
@@ -57,6 +57,15 @@ void DataServer::RequestProcess()
 {
 	//each client has to recieve all incremental messages
 
+
+	/*
+	client:
+	send data_type::Request with value=0
+		->get number
+	request all messages till number
+	connect to publisher
+	request all other messages till actual number
+	*/
 	void* responder = zmq_socket(context, ZMQ_REP);
 	int conn = zmq_bind(responder, "tcp://*:5002");
 	while (!bExit_)
@@ -73,14 +82,14 @@ void DataServer::RequestProcess()
 		memcpy(&req, zmq_msg_data(&request), length);
 		zmq_msg_close(&request);
 
-		if (req.type != data_type::Request)
+		if (req.type != data_type::kRequest)
 		{
 			throw("Wrong type of incoming message!");
 		}
 
 		switch (req.req_type)
 		{
-		case request_type::Message:
+		case request_type::kMessage:
 		{
 			int req_num = req.value;
 
@@ -105,12 +114,11 @@ void DataServer::RequestProcess()
 			break;
 		}
 		//user's commands:
-		case request_type::Connect:
+		case request_type::kConnect:
 		{
-
 			break;
 		}
-		case request_type::Disconnect:
+		case request_type::kDisconnect:
 		{
 
 			break;
@@ -165,7 +173,6 @@ void DataServer::EventProcess(const Event& _event) {
 		else
 			PublishMessage(&data, sizeof(data));
 
-		//todo: strategy change event
 		break;
 	}
 	case Event::Types::kMyTradeAdd:
@@ -180,6 +187,8 @@ void DataServer::EventProcess(const Event& _event) {
 		data.price = deal->price();
 		data.id = deal->global_id();
 		data.direction = deal->direction();
+		data.date = deal->time().GetDateStruct();
+		data.time = deal->time().GetTimeStruct();
 
 		StoreMessage(&data, sizeof(data));		
 		break;
@@ -238,6 +247,8 @@ void DataServer::EventProcess(const Event& _event) {
 		data.direction = ord->direction();
 		data.balance = ord->balance();
 		data.state = ord->state();
+		data.date = ord->time().GetDateStruct();
+		data.time = ord->time().GetTimeStruct();
 
 		StoreMessage(&data, sizeof(data));		
 		break;
