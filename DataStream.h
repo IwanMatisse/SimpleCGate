@@ -9,67 +9,69 @@
 #include <thread>
 #include "Utils.h"
 
-
-enum class DataStreamState { kNone, kError, kOpening, kClosed, kActive };
-enum class ListenerState { kNone, kClose, kOpen, kOnline };
-
-//wrapper for plaza's listener
-struct PlazaStream
+namespace simple_cgate
 {
-	std::string name;
-	bool is_active{ false };
-	int life_num;
-	bool wait_for{false};//use for waiting other stream go to online
-	std::string replica_state;
-	ListenerState state{ ListenerState::kNone };
-	cg_listener_t* listener{ nullptr };	
+	enum class DataStreamState { kNone, kError, kOpening, kClosed, kActive };
+	enum class ListenerState { kNone, kClose, kOpen, kOnline };
 
-	PlazaStream(const std::string& name_)
+	//wrapper for plaza's listener
+	struct PlazaStream
 	{
-		name = name_;
-	}
-};
+		std::string name;
+		bool is_active{ false };
+		int life_num;
+		bool wait_for{ false };//use for waiting other stream go to online
+		std::string replica_state;
+		ListenerState state{ ListenerState::kNone };
+		cg_listener_t* listener{ nullptr };
 
-/*
-Implements routines for work with cgate's connection and listeners. 
-CGate's connection is created here.
-The listeners are created in the derived classes.
+		PlazaStream(const std::string& name_)
+		{
+			name = name_;
+		}
+	};
 
-*/
-class DataStream
-{
-public:	
-		
-	DataStream(void* connector,const char key, const std::string& mode);
-	virtual ~DataStream();
+	/*
+	Implements routines for work with cgate's connection and listeners.
+	CGate's connection is created here.
+	The listeners are created in the derived classes.
 
-	DataStream(const DataStream&) = delete;
-	DataStream& operator=(const DataStream&) = delete;
+	*/
+	class DataStream
+	{
+	public:
 
-	virtual void InitPlazaStreams();
-	virtual const std::string& name() const;
+		DataStream(void* connector, const char key, const std::string& mode);
+		virtual ~DataStream();
 
-	void Start(const std::string& conn_str);
-	void Stop();
+		DataStream(const DataStream&) = delete;
+		DataStream& operator=(const DataStream&) = delete;
 
-	void Process(); //the main loop to manage states of connections and listeners.
+		virtual void InitPlazaStreams();
+		virtual const std::string& name() const;
 
-	DataStreamState state() const;
-	std::vector<PlazaStream> const& GetPlazaStreams() const;
+		void Start(const std::string& conn_str);
+		void Stop();
 
-	virtual void SetWaitForFlag(const bool flag, const int listener_num);//waited listener will not be open until others listeners not online
-protected:
+		void Process(); //the main loop to manage states of connections and listeners.
 
-	std::vector<PlazaStream> plaza_streams_;	
-	cg_conn_t* connection_;
-	std::string name_{ "base" };
-	void* plaza_;
-	std::thread work_thread_;
-private:
-	std::atomic<bool> exit_;
-	char key_;
+		DataStreamState state() const;
+		std::vector<PlazaStream> const& GetPlazaStreams() const;
 
-	std::string mode_;
-	DataStreamState state_;
-	
-};
+		virtual void SetWaitForFlag(const bool flag, const int listener_num);//waited listener will not be open until others listeners not online
+	protected:
+
+		std::vector<PlazaStream> plaza_streams_;
+		cg_conn_t* connection_;
+		std::string name_{ "base" };
+		void* plaza_;
+		std::thread work_thread_;
+	private:
+		std::atomic<bool> exit_;
+		char key_;
+
+		std::string mode_;
+		DataStreamState state_;
+
+	};
+} //namespace simple_cgate

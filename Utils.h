@@ -6,11 +6,15 @@
 #include <fstream>
 #include "DateTime.h"
 
-DateTime Now();
+namespace simple_cgate
+{
+	DateTime Now();
 
-//read ini-file, convert the file to std::map by section names 
-std::map<std::string, std::map<std::string, std::string>> ReadConfigFile(const std::string& path);
+	//read ini-file, convert the file to std::map by section names 
+	std::map<std::string, std::map<std::string, std::string>> ReadConfigFile(const std::string& path);
 
-void ReadParameter(std::map<std::string, std::string> &map, const std::string& name, std::string &dest);
+	void ReadParameter(std::map<std::string, std::string> &map, const std::string& name, std::string &dest);
 
-void ReadParameter(std::map<std::string, std::string> &map, const std::string& name, bool &dest);
+	void ReadParameter(std::map<std::string, std::string> &map, const std::string& name, bool &dest);
+}// namespace simple_cgate
+

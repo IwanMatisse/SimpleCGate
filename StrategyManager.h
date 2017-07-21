@@ -24,34 +24,37 @@ Types of events: New security, New trade, Changing order, Changing price.
 Each strategy has to be subscribed on the changing prices only in used securities. 
 It can be done by calling StrategyManager::AddStrategy(<strategy>, <list of securities>)
 */
+namespace simple_cgate
+{
 
-class StrategyManager:public IEventConsumer
-{	
-public:
-	virtual void BackgroundProcess();
-	
-	virtual void AddStrategy(const std::shared_ptr<Strategy>& strategy, std::vector<std::shared_ptr<Security>> securities);
-	StrategyManager(EventManager& eve, GateDatabase& db);
-	virtual ~StrategyManager();
-	virtual void OnDisconnect();
+	class StrategyManager :public IEventConsumer
+	{
+	public:
+		virtual void BackgroundProcess();
 
-	StrategyManager(const StrategyManager&) = delete;
-	StrategyManager& operator=(const StrategyManager&) = delete;
+		virtual void AddStrategy(const std::shared_ptr<Strategy>& strategy, std::vector<std::shared_ptr<Security>> securities);
+		StrategyManager(EventManager& eve, GateDatabase& db);
+		virtual ~StrategyManager();
+		virtual void OnDisconnect();
 
-private:
-	
-	std::thread background_thread_;
-	std::atomic<bool> exit_flag_ = true;
+		StrategyManager(const StrategyManager&) = delete;
+		StrategyManager& operator=(const StrategyManager&) = delete;
 
-	bool is_connected_{ false };
+	private:
 
-	GateDatabase& database_;
+		std::thread background_thread_;
+		std::atomic<bool> exit_flag_ = true;
 
-	virtual void EventProcess(const Event& _event) override;
+		bool is_connected_{ false };
 
-	EventManager& event_manager_;
-	std::mutex algo_lock_;
-	std::vector<std::shared_ptr<Strategy>> strategies_;
+		GateDatabase& database_;
 
-	std::map<int, std::vector<std::shared_ptr<Strategy>>> strategies_map_; //link between a security and strategies using the security
-};
+		virtual void EventProcess(const Event& _event) override;
+
+		EventManager& event_manager_;
+		std::mutex algo_lock_;
+		std::vector<std::shared_ptr<Strategy>> strategies_;
+
+		std::map<int, std::vector<std::shared_ptr<Strategy>>> strategies_map_; //link between a security and strategies using the security
+	};
+}// namespace simple_cgate

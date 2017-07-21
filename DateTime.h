@@ -1,85 +1,50 @@
 #pragma once
 #include "stdafx.h"
 #include <string>
-#include <stdio.h>
-#include <stdlib.h>
-#include <iomanip>
-#include <sstream>
 
-class DateTime
+namespace simple_cgate
 {
-public:
-	DateTime() {}
+#pragma pack(push, 4)
+	struct date_struct
+	{
+		int year;
+		int month;
+		int day;
+	};
 
-	DateTime(int y, int m, int d, int H, int M, int S, int MS)
+	struct time_struct
 	{
-		year_ = y;
-		month_ = m;
-		day_ = d;
-		hour_ = H;
-		minute_ = M;
-		second_ = S;
-		msecond_ = MS;
-	}
+		int HH;
+		int mm;
+		int ss;
+		int ms;
+	};
+#pragma pack(pop)
 
-	std::string GetDate()
+	class DateTime
 	{
-		std::stringstream ss;
-		ss.precision(2);
-		ss <<day_ << "-" << month_ << "-" << year_;
-		return ss.str();
-	}
-
-	std::string GetTime()
-	{
-		std::stringstream ss;
-		ss.precision(2);
-		ss << hour_ << ":" << minute_ << ":" << second_ << "." << msecond_;
-		return ss.str();
-	}
-
-	std::string GetDateTime()
-	{
-		std::stringstream ss;
-		ss.precision(2);
-		ss << day_ << "-" << month_ << "-" << year_ <<" "<< hour_ << ":" << minute_ << ":" << second_ << "." << msecond_;
-		return ss.str();
-	}
-
-	int year()const
-	{
-		return year_;
-	}
-	int month()const
-	{
-		return month_;
-	}
-	int day()const
-	{
-		return day_;
-	}
-	int hour()const
-	{
-		return hour_;
-	}
-	int minute()const
-	{
-		return minute_;
-	}
-	int second()const
-	{
-		return second_;
-	}
-	int millisecond()const
-	{
-		return msecond_;
-	}
-private:
-	int year_ {0};
-	int month_{0};
-	int day_{0};
-	int hour_{0};
-	int minute_{0};
-	int second_{0};
-	int msecond_{0};
-};
+	public:
+		DateTime() {}
+		DateTime(int y, int m, int d, int H, int M, int S, int MS);
+		date_struct GetDateStruct() const;
+		time_struct GetTimeStruct() const;
+		std::string GetDate();
+		std::string GetTime();
+		std::string GetDateTime();
+		int year()const;
+		int month()const;
+		int day()const;
+		int hour()const;
+		int minute()const;
+		int second()const;
+		int millisecond()const;
+	private:
+		int year_{ 0 };
+		int month_{ 0 };
+		int day_{ 0 };
+		int hour_{ 0 };
+		int minute_{ 0 };
+		int second_{ 0 };
+		int msecond_{ 0 };
+	};
+}// namespace simple_cgate

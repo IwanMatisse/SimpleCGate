@@ -1,20 +1,23 @@
 #pragma once
 #include "stdafx.h"
 
-class Entity
+namespace simple_cgate
 {
-public:
-	virtual ~Entity() = default;
-
-	virtual int global_id() const
+	class Entity
 	{
-		return global_id_;
-	}
+	public:
+		virtual ~Entity() = default;
 
-	virtual void SetGlobalId(const int id)
-	{
-		global_id_ = id;
-	}
-private:
-	int global_id_{0};
-};
+		virtual int global_id() const
+		{
+			return global_id_;
+		}
+
+		virtual void SetGlobalId(const int id)
+		{
+			global_id_ = id;
+		}
+	private:
+		int global_id_{ 0 };
+	};
+} // namespace simple_cgate
