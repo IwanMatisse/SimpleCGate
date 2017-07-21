@@ -17,8 +17,10 @@ namespace simple_cgate
 	void DataServer::StoreMessage(void *data, int data_size)
 	{
 		zmq_msg_t message;
-		zmq_msg_init_size(&message, data_size);
-		memcpy(zmq_msg_data(&message), &data, data_size);
+
+		void *buf = malloc(data_size);
+		memcpy(buf, data, data_size);
+		int rc = zmq_msg_init_data(&message, buf, data_size, nullptr, nullptr);				
 		{
 			std::lock_guard<std::mutex> locker(incremental_lock_);
 			incremental_messages_.push_back(std::move(message));
@@ -30,11 +32,16 @@ namespace simple_cgate
 	//push the message to publishing queue (the message isn't saved after publishing) 
 	void DataServer::PublishMessage(void *data, int data_size)
 	{
+
 		zmq_msg_t message;
-		zmq_msg_init_size(&message, data_size);
-		memcpy(zmq_msg_data(&message), &data, data_size);
+
+		void *buf = malloc(data_size);		
+		memcpy(buf, data, data_size);
+		int rc = zmq_msg_init_data(&message, buf, data_size, nullptr, nullptr);
+				
 		std::lock_guard<std::mutex> locker(stream_lock_);
 		stream_messages_.push(std::move(message));
+		//printf("message publish \n");
 	}
 
 	void DataServer::StreamProcess()
@@ -54,6 +61,8 @@ namespace simple_cgate
 				zmq_msg_close(&message);
 				stream_messages_.pop();
 			}
+			std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+			PublishMessage(&srv_data_, sizeof(srv_data_));
 		}
 		zmq_close(publisher);
 	}
@@ -62,12 +71,11 @@ namespace simple_cgate
 	{
 		//each client has to recieve all incremental messages
 
-
 		/*
 		client:
 		send data_type::Request with value=0
 			->get number
-		request all messages till number
+		request all messages till the number
 		connect to publisher
 		request all other messages till actual number
 		*/
@@ -102,8 +110,11 @@ namespace simple_cgate
 				{
 					//wrong message's number, send total amount of messages
 					zmq_msg_t message;
-					zmq_msg_init_size(&message, sizeof(srv_data_));
-					memcpy(zmq_msg_data(&message), &srv_data_, sizeof(srv_data_));
+
+					void *buf = malloc(sizeof(srv_data_));
+					memcpy(buf, &srv_data_, sizeof(srv_data_));
+					int rc = zmq_msg_init_data(&message, buf, sizeof(srv_data_), nullptr, nullptr);
+					
 					zmq_msg_send(&message, responder, 0);
 					zmq_msg_close(&message);
 				}
@@ -154,7 +165,8 @@ namespace simple_cgate
 
 			security_data data;
 			//fill the data
-			memcpy(data.symbol, sec_ptr->isin().c_str(), min(25, sec_ptr->isin().length()));
+			memset(data.symbol, 0, 26);
+			memcpy_s(data.symbol, 26, sec_ptr->isin().c_str(), sec_ptr->isin().length());
 			data.symbol[25] = 0;
 			data.last_price = sec_ptr->last_price();
 			data.id = sec_ptr->global_id();
@@ -163,6 +175,7 @@ namespace simple_cgate
 			data.ask_vol = sec_ptr->ask_volume();
 			data.ask = sec_ptr->ask();
 
+			//printf("new message SECURITY %d \n", _event.type);
 			if (_event.type == Event::Types::kSecurityAdd)
 				StoreMessage(&data, sizeof(data));
 			else

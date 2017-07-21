@@ -177,6 +177,7 @@ namespace simple_cgate
 					plaza_common->amount_sell);
 				security->SetBid(ConvertToDouble(plaza_common->best_buy),
 					plaza_common->amount_buy);
+				AddQuoteEvent(security);
 			}
 			break;
 		}
