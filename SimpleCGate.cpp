@@ -40,7 +40,7 @@ int main()
 				sample_strategy->LoadConfig();
 				algoManager.AddStrategy(sample_strategy, sample_strategy->GetUsedSecurity()); // registration in StrategyManager
 
-				plaza.Connect();
+				//plaza.Connect();
 
 
 				std::cin >> c;

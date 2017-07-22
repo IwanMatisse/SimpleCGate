@@ -56,7 +56,7 @@ namespace simple_cgate
 		int symbol_id = 0;
 		int volume = 0;
 		double price = 0.0;
-		char direction = 0;
+		int direction = 0;
 		int id = 0;
 		date_struct date;
 		time_struct time;
@@ -68,7 +68,7 @@ namespace simple_cgate
 		int symbol_id = 0;
 		int volume = 0;
 		double price = 0.0;
-		char direction = 0;
+		int direction = 0;
 		int id = 0;
 		int state = 0;
 		int balance = 0;

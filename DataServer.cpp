@@ -132,11 +132,22 @@ namespace simple_cgate
 			//user's commands:
 			case request_type::kConnect:
 			{
+				AddCommandEvent(Command(CommandType::kCommandConnect, 0, 0));
+				zmq_msg_t message;
+				zmq_msg_init_size(&message, strlen("OK"));
+				memcpy(zmq_msg_data(&message), "OK", strlen("OK"));
+				zmq_msg_send(&message, responder, 0);
+				zmq_msg_close(&message);
 				break;
 			}
 			case request_type::kDisconnect:
 			{
-
+				AddCommandEvent(Command(CommandType::kCommandDisconnect, 0, 0));
+				zmq_msg_t message;
+				zmq_msg_init_size(&message, strlen("OK"));
+				memcpy(zmq_msg_data(&message), "OK", strlen("OK"));
+				zmq_msg_send(&message, responder, 0);
+				zmq_msg_close(&message);
 				break;
 			}
 			}
@@ -233,7 +244,13 @@ namespace simple_cgate
 			data.fee = money_info_->fee();
 			data.free = money_info_->free_amount();
 
-			PublishMessage(&data, sizeof(data));
+			if (!bMoneyInit)
+			{
+				StoreMessage(&data, sizeof(data));
+				bMoneyInit = true;
+			}
+			else
+				PublishMessage(&data, sizeof(data));
 			break;
 		}
 		case Event::Types::kPositionClear:
@@ -282,7 +299,11 @@ namespace simple_cgate
 		}
 		case Event::Types::kDisconnect:
 		{
-
+			{
+			//	std::lock_guard<std::mutex> locker(incremental_lock_);
+			//	incremental_messages_.clear();
+			//	srv_data_.all_messages = 0;
+			}
 			break;
 		}
 		}

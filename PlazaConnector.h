@@ -20,7 +20,7 @@
 
 namespace simple_cgate
 {
-	class PlazaConnector :public IConnector
+	class PlazaConnector :public IConnector, public IEventConsumer
 	{
 	public:
 		PlazaConnector(const std::string& path_to_config, EventManager& event_manager, GateDatabase& database);
@@ -57,6 +57,8 @@ namespace simple_cgate
 		void AddMoneyEvent(const std::shared_ptr<Money>& mon);
 		void AddPositionEvent(const std::shared_ptr<Position>& pos);
 		void AddSecurityEvent(const std::shared_ptr<Security>& sec);
+
+		virtual void EventProcess(const Event& _event) override;
 
 		bool InitConfig(const std::string&);
 		GateDatabase& database_;

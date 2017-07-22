@@ -18,22 +18,21 @@ There is only one type of messages. It is Event message.
 namespace simple_cgate
 {
 
+	enum CommandType {kCommandConnect = 1, kCommandDisconnect=2, kCommandStart=3, kCommandStop=4};
 	//store command's parameters 
 	struct Command
 	{
-		int commandNum{ 0 };
-		std::string executorName{ "" };
-		int executorType{ 0 };
+		CommandType type;
+		int id{ 0 };
 		int value{ 0 };
 
 		Command()
 		{
 		}
-		Command(int _com, const std::string& _name, int _type, int _value)
+		Command(CommandType _com, int _id, int _value)
 		{
-			commandNum = _com;
-			executorName = _name;
-			executorType = _type;
+			type = _com;			
+			id = _id;
 			value = _value;
 		}
 	};

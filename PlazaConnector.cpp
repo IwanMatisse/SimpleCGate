@@ -135,6 +135,22 @@ namespace simple_cgate
 		auto_connection_enabled_ = false;
 	}
 
+	void PlazaConnector::EventProcess(const Event& event_)
+	{
+		if (event_.type == Event::Types::kCommand)
+		{
+			switch (event_.command.type)
+			{
+			case CommandType::kCommandConnect:
+				Connect();
+				break;
+			case CommandType::kCommandDisconnect:
+				Disconnect();
+				break;
+			}
+		}
+	}
+
 	bool PlazaConnector::IsSecuirtyExist(long id) const
 	{
 		return securities_id_.find(id) != securities_id_.end();
@@ -174,10 +190,12 @@ namespace simple_cgate
 		}
 
 		transaction_id = app_id_ * 1000000;
+		event_manager_.AddNewConsumer(this);
 	}
 
 	PlazaConnector::~PlazaConnector()
 	{
+		event_manager_.RemoveConsumer(this);
 		DisableAutoConnection();
 		Disconnect();
 		if (cg_env_close() != CG_ERR_OK)
@@ -200,6 +218,7 @@ namespace simple_cgate
 			event_manager_.AddEvent(Event::Types::kConnect, 0);
 
 		}
+		
 	}
 
 	void PlazaConnector::Disconnect()

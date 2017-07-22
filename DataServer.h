@@ -50,6 +50,11 @@ namespace simple_cgate
 		DataServer(const DataServer&) = delete;
 		DataServer& operator=(const DataServer&) = delete;
 	private:
+		
+		void AddCommandEvent(Command com)
+		{
+			event_manager_.AddCommandEvent(com);			
+		}
 
 		virtual void EventProcess(const Event& _event) override;
 		EventManager& event_manager_;
@@ -74,5 +79,6 @@ namespace simple_cgate
 		GateDatabase& database_;
 
 		bool bExit_ = false;
+		bool bMoneyInit = false;
 	};
 }
