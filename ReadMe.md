@@ -90,13 +90,16 @@ Functionality:
 A message of the type kServer contains the total number of messages stored on the server. The client has to receive all these messages. Each message stores an event or object that is necessary to get the current status.
 
 The DataServer waits request from client with this structure:
-```struct client_request
+```
+struct client_request
 	{
 		int type = data_type::kRequest;
 		int req_type = request_type::kMessage;
 		int value = 0;
 		int id = 0;
-	};```
+	};
+```
+
 where `req_type` can be:
 `kMessage` — to request the message with «value» number 
 `kConnect` — to send a command «Connect to the router»
