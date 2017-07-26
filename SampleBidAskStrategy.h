@@ -119,9 +119,9 @@ namespace simple_cgate
 		void LoadConfig()
 		{
 			//In real application, there should be loading strategy's settings from file or db
-			symbol_ = "RTS-6.17";
-			signal_volume_ = 100;
-			work_volume_ = 10;
+			symbol_ = "RTS-9.17";
+			signal_volume_ = 10;
+			work_volume_ = 1;
 
 			if (database_.IsSecurityExist(symbol_))
 				security_ = database_.GetSecurity(symbol_);

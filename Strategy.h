@@ -66,6 +66,11 @@ namespace simple_cgate
 			return 0;
 		}
 
+		const std::string&  name() const
+		{
+			return name_;
+		}
+
 		std::function<void(const std::shared_ptr<Order>&)> PostOrder;
 		std::function<void(const std::shared_ptr<Order>&, const std::shared_ptr<Order>&)> MoveOrder;
 		std::function<void(const std::shared_ptr<Order>&)> CancelOrder;

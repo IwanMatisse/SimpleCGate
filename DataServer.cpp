@@ -205,6 +205,11 @@ namespace simple_cgate
 			data.price = str->current_price();
 			data.state = str->state();
 			data.volume = str->current_volume();
+			data.id = str->global_id();		
+			memset(data.name, 0, 10);
+			auto name = str->name();
+			memcpy_s(data.name, 10, name.c_str(), name.length()>10?10:name.length());
+			data.name[9] = 0;
 
 			if (_event.type == Event::Types::kNewStrategy)
 				StoreMessage(&data, sizeof(data));

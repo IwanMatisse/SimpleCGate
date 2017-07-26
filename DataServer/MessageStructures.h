@@ -89,10 +89,12 @@ namespace simple_cgate
 	struct strategy_data
 	{
 		int type = data_type::kStrategy;
+		int id = 0;
 		double price = 0.0;
 		int volume = 0;
 		char state = 0;
 		bool enabled = false;
+		char name[10];
 	};
 #pragma pack(pop)
 } //namespace simple_cgate

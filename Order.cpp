@@ -6,7 +6,7 @@ namespace simple_cgate
 	Order::Order(const std::shared_ptr<Security>& sec, const unsigned int userId) :
 		security_(sec)
 	{
-		user_id_ = userId;
+		user_id_ = userId;		
 	}
 
 
