@@ -101,11 +101,12 @@ struct client_request
 ```
 
 where `req_type` can be:
-`kMessage` — to request the message with «value» number 
-`kConnect` — to send a command «Connect to the router»
-`kDisconnect` — to send a command «Disconnect»
-`kRunStrategy` — to send a command «Run the strategy», where «value» is «id» of the strategy.
-`kStopStrategy` — to send a command «Stop the strategy», where «value» is «id» of the strategy.
+* `kMessage` — to request the message with «value» number
+* `kConnect` — to send a command «Connect to the router»
+* `kDisconnect` — to send a command «Disconnect»
+* `kRunStrategy` — to send a command «Run the strategy», where «value» is «id» of the strategy.
+* `kStopStrategy` — to send a command «Stop the strategy», where «value» is «id» of the strategy.
+
 
 ---
 
