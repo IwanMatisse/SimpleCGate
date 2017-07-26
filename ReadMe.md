@@ -1,4 +1,4 @@
-# SimpleCGate 
+﻿# SimpleCGate 
 ---
 
 is a sample of implementation of a software application for access to the SPECTRA market using the P2 CGate library (the Moscow Exchange: the Derivatives Market).   
@@ -23,7 +23,7 @@ is a sample of implementation of a software application for access to the SPECTR
 
 **StrategyManager** – controls the pool of trade strategies.
 
-**DataServer** – provides an interaction with the GUI (the GUI is not included in this application).
+**DataServer** – provides an interaction with the GUI (see CSharpClient as sample).
 
 **EventsManager** – provides communication between all the other parts. It is a "message dispatcher".
 
@@ -80,7 +80,29 @@ Data:
 
 ## DataServer
 
-It is a base for communication with the extern GUI. It stores entities from the **GateDatabase** in local containers that can be used for safe transmission (without any locks on the main threads) to other application. Also, it is a good place for receiving the user control command from the GUI. 
+Functionality:
+- continuously broadcasts data (prices, limits, variational margin, positions) to external GUI
+- stores all events and objects (orders, trades, symbols) and provides them on client's request
+- receives and processes commands from user
+
+**ZeroMQ** is used for distributed messaging. The data is sent as binary. The structures is described in ```MessageStructures.h```
+
+A message of the type kServer contains the total number of messages stored on the server. The client has to receive all these messages. Each message stores an event or object that is necessary to get the current status.
+
+The DataServer waits request from client with this structure:
+```struct client_request
+	{
+		int type = data_type::kRequest;
+		int req_type = request_type::kMessage;
+		int value = 0;
+		int id = 0;
+	};```
+where `req_type` can be:
+`kMessage` — to request the message with «value» number 
+`kConnect` — to send a command «Connect to the router»
+`kDisconnect` — to send a command «Disconnect»
+`kRunStrategy` — to send a command «Run the strategy», where «value» is «id» of the strategy.
+`kStopStrategy` — to send a command «Stop the strategy», where «value» is «id» of the strategy.
 
 ---
 
